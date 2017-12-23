@@ -24,4 +24,4 @@ WORKDIR $BURST_PLOTTER_DIR
 RUN chmod +x plot plotavx2
 
 # User should supply args upon container run
-ENTRYPOINT ["./plot"]
+ENTRYPOINT ["/usr/bin/env"]

@@ -9,7 +9,14 @@ Dockerfile for Burst Miner & Plotter (Linux)
 ### Plotting via Docker
     docker run -it \
       -v /home/burst:/mnt/burst \
-      ewrogers/burst-plotter:latest -k $WALLET_NUMERIC_ID -d /mnt/burst/plots -n 614400
+      ewrogers/burst-plotter:latest \
+      ./plot -k $WALLET_NUMERIC_ID -d /mnt/burst/plots -n 614400
+#### Plotting using AVX2
+    docker run -it \
+      -v /home/burst:/mnt/burst \
+      ewrogers/burst-plotter:latest \
+      ./plotavx2 -k $WALLET_NUMERIC_ID -x 2 -d /mnt/burst/plots -n 614400
+
 
 **NOTE:** See [omdcct usage](https://github.com/alter3d/omdcct) for more information on command line arguments.
 
