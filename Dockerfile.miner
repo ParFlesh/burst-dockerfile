@@ -24,20 +24,17 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 WORKDIR /tmp
 RUN wget $CREEP_MINER_RELEASE \
   && mkdir -p $CREEP_MINER_PACKAGE \
+  && mkdir -p $CREEP_MINER_DIR \
   && tar -xvf $CREEP_MINER_ARCHIVE \
   && cd $CREEP_MINER_PACKAGE \
   && sudo ./install-poco.sh \
-  && cmake CMakeLists.txt -DNO_GPU=ON \
-  && make
+  && cmake CMakeLists.txt -DNO_GPU=ON -DCMAKE_INSTALL_PREFIX:PATH=$CREEP_MINER_DIR \
+  && make \
+  && make install \
+  && make clean
 
 # Copy binaries and cleanup
-RUN mkdir -p $CREEP_MINER_DIR \
-  && cd $CREEP_MINER_PACKAGE \
-  && rm ./bin/*.dll \
-  && rm ./bin/mining.conf \
-  && cp -r ./bin $CREEP_MINER_DIR \
-  && cd .. \
-  && rm -rf $CREEP_MINER_PACKAGE \
+RUN rm -rf $CREEP_MINER_PACKAGE \
   && rm $CREEP_MINER_ARCHIVE
 
 # Uninstall toolchain after installing Poco and building from source
