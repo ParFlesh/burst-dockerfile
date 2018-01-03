@@ -44,6 +44,7 @@ RUN mkdir -p $CREEP_MINER_DIR \
 ENV SUDO_FORCE_REMOVE yes
 RUN apt-get remove -y \
   build-essential \
+  cmake \
   git \
   sudo \
   wget \
