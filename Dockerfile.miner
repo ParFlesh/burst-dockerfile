@@ -28,7 +28,7 @@ RUN wget $CREEP_MINER_RELEASE \
   && tar -xvf $CREEP_MINER_ARCHIVE \
   && cd $CREEP_MINER_PACKAGE \
   && sudo ./install-poco.sh \
-  && cmake CMakeLists.txt -DNO_GPU=ON -DCMAKE_INSTALL_PREFIX:PATH=$CREEP_MINER_DIR \
+  && cmake CMakeLists.txt -DCMAKE_BUILD_TYPE=RELEASE -DNO_GPU=ON -DUSE_AVX2=ON -DCMAKE_INSTALL_PREFIX:PATH=$CREEP_MINER_DIR \
   && make \
   && make install \
   && make clean
