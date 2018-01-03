@@ -49,7 +49,7 @@ RUN apt-get remove -y \
   && apt-get autoclean \
   && apt-get clean
 
-WORKDIR $CREEP_MINER_DIR/bin
+WORKDIR $CREEP_MINER_DIR
 
 # Add execute permission to binary (and remove default config)
 RUN chmod +x ./creepMiner
