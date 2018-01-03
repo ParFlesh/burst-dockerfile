@@ -58,5 +58,8 @@ RUN chmod +x ./creepMiner \
 # Expose local web port
 EXPOSE 8080
 
+# Copy Shell scripts
+COPY miner.sh $CREEP_MINER_PACKAGE
+
 ENV CREEP_MINER_DATADIR /mnt/miner
-CMD ./creepMiner ${CREEP_MINER_DATADIR}/mining.conf
+ENTRYPOINT ./miner.sh
