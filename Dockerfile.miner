@@ -14,6 +14,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
   build-essential \
   libssl-dev \
   openssl \
+  cmake \
   git \
   sudo \
   wget \
@@ -26,6 +27,7 @@ RUN wget $CREEP_MINER_RELEASE \
   && tar -xvf $CREEP_MINER_ARCHIVE \
   && cd $CREEP_MINER_PACKAGE \
   && sudo ./install-poco.sh \
+  && cmake CMakeLists.txt -DNO_GPU=ON \
   && make
 
 # Copy binaries and cleanup
