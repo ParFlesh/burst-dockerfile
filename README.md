@@ -2,7 +2,7 @@
 Dockerfile for Burst Miner & Plotter (Linux)
 
 * **Plotter:** omdcct v0.1 (https://github.com/alter3d/omdcct)
-* **Miner:** creepMiner v1.6.0 (https://github.com/Creepsky/creepMiner)
+* **Miner:** creepMiner v1.7.6 (https://github.com/Creepsky/creepMiner)
 
 :moneybag: Donations welcomed at `BURST-8GDX-8DTV-MHNB-HQX3F` :bow:
 
