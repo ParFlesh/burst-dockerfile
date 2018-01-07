@@ -58,7 +58,8 @@ RUN chmod +x ./creepMiner
 EXPOSE 8080
 
 # Copy Shell scripts
-COPY miner.sh $CREEP_MINER_PACKAGE
+COPY miner.sh $CREEP_MINER_DIR
+RUN chmod +x ./miner.sh
 
 ENV CREEP_MINER_DATADIR /mnt/miner
 ENTRYPOINT ./miner.sh
