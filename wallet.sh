@@ -7,6 +7,7 @@ rm $CONF_DIR/nxt.properties 2> /dev/null
 rm $CONF_DIR/logging.properties 2> /dev/null
 
 # My IP
+echo "nxt.myPlatform = Linux-MariaDB" >> $CONF_DIR/nxt.properties
 echo "nxt.myAddress = ${PUBLIC_IP}" >> $CONF_DIR/nxt.properties
 echo "\n" >> $CONF_DIR/nxt.properties
 
