@@ -1,0 +1,64 @@
+FROM debian:jessie-slim
+MAINTAINER Erik Rogers <erik.rogers@live.com>
+
+ENV DEBIAN_FRONTEND noninteractive
+
+ENV CG_WALLET_VERSION 1.3.6cg
+ENV CG_WALLET_PACKAGE burstcoin-${CG_WALLET_VERSION}
+ENV CG_WALLET_ARCHIVE ${CG_WALLET_PACKAGE}.zip
+
+# Choose binary release for CG wallet
+ENV CG_WALLET_RELEASE https://github.com/ac0v/burstcoin/releases/download/${CG_WALLET_VERSION}/${CG_WALLET_ARCHIVE}
+ENV CG_WALLET_DIR /opt/${CG_WALLET_PACKAGE}
+
+# Install OpenJDK 8
+RUN echo 'deb http://deb.debian.org/debian jessie-backports main' \
+  > /etc/apt/sources.list.d/jessie-backports.list \
+  && mkdir -p /usr/share/man/man1 \
+  && apt-get update && apt-get install -t jessie-backports -y --no-install-recommends \
+  openjdk-8-jre-headless \
+  ca-certificates-java
+
+# Install other dependencies
+RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
+  socat \
+  unzip \
+  wget \
+  && rm -rf /var/lib/apt/lists/*
+
+# Copy binaries and cleanup
+WORKDIR /tmp
+RUN wget $CG_WALLET_RELEASE \
+  && unzip $CG_WALLET_ARCHIVE \
+  && mv $CG_WALLET_PACKAGE /opt \
+  && rm -rf $CG_WALLET_RELEASE \
+  && rm $CG_WALLET_ARCHIVE
+
+# Uninstall unncessary tools
+RUN apt-get remove -y \
+  unzip \
+  wget \
+  && apt-get autoremove -y \
+  && apt-get autoclean \
+  && apt-get clean
+
+# Peer to peer config defaults
+ENV PUBLIC_IP 127.0.0.1
+
+# Database config defaults
+ENV DB_HOST localhost
+ENV DB_PORT 3306
+ENV DB_USERNAME sa
+ENV DB_PASSWORD sa
+ENV DB_MAX_POOL_SIZE 30
+
+# Expose peer to peer and local web ports
+EXPOSE 8123 8125 9123 9125
+
+# Copy wallet script
+COPY wallet.sh $CG_WALLET_DIR
+
+# Run wallet
+WORKDIR $CG_WALLET_DIR
+RUN chmod +x wallet.sh burst.sh
+ENTRYPOINT ["./wallet.sh"]
