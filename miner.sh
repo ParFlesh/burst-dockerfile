@@ -1,3 +1,4 @@
-#!/bin/sh
+#!/bin/bash -e
 
-./creepMiner $CREEP_MINER_DATADIR/mining.conf
+cd ${CREEP_MINER_DATADIR}
+exec creepMiner ./mining.conf
