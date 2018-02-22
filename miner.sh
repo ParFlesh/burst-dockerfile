@@ -1,4 +1,8 @@
 #!/bin/bash -e
 
-ln -s $CREEP_MINER_DATADIR/mining.conf ./mining.conf
+# Make link to config
+if [ ! -f ./mining.conf ]
+  ln -s $CREEP_MINER_DATADIR/mining.conf ./mining.conf
+fi
+
 exec creepMiner ./mining.conf
